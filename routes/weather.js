@@ -28,7 +28,7 @@ async function generateWeatherData() {
     } catch (error) {
         console.log('Internal server error :' + error)
     }
-    setTimeout(generateWeatherData, 5 * 60 * 1000);
+    setTimeout(generateWeatherData, 0.1 * 60 * 1000);
 };
 
 async function deleteAllDataBy24Hours() {
@@ -45,12 +45,15 @@ deleteAllDataBy24Hours()
 
 router.get('/', async (req, res) => {
     try {
-        const weather = await Weather.find();
-        if (!weather) throw Error('No items');
+        const weather = await Weather.find().sort({ timestamp: -1 }).limit(25);
+        if (!weather || weather.length === 0) {
+            throw Error('No items');
+        }
         res.status(200).json(weather);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 });
+
 
 module.exports = router;
