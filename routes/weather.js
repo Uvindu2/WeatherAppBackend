@@ -3,22 +3,20 @@ const Weather = require('../model/weather');
 const router = express.Router();
 
 const backendApiKey = process.env.API_KEY;
-
-// Define a middleware to verify API key
+// Middleware
 const verifyApiKey = (req, res, next) => {
     const apiKey = req.headers['apikey'];
 
 
     if (apiKey && apiKey === backendApiKey) {
         console.log("Authorized User")
-        next(); // Proceed to the next middleware
+        next();
     } else {
         console.log("Unauthorized User")
         res.status(401).json({ error: 'Unauthorized' });
     }
 };
 
-// Middleware
 router.use(express.json());
 
 
