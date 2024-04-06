@@ -1,35 +1,37 @@
 const express = require("express");
-const weatherSchema = require("../model/weather");
 const Weather = require('../model/weather');
 const router = express.Router();
 
+const backendApiKey = process.env.API_KEY;
 
-async function generateWeatherData() {
-    try {
-        const districts = [
-            'Colombo', 'Gampaha', 'Kalutara', 'Kandy', 'Matale', 'Nuwara Eliya', 'Galle', 'Matara',
-            'Hambantota', 'Jaffna', 'Kilinochchi', 'Mannar', 'Mullaitivu', 'Vavuniya', 'Puttalam',
-            'Kurunegala', 'Anuradhapura', 'Polonnaruwa', 'Badulla', 'Monaragala', 'Ratnapura', 'Kegalle'
-        ];
-        const weatherDetails = districts.map(district => {
-            const temperature = (Math.random() * 10 + 25).toFixed(2);
-            const humidity = (Math.random() * 30 + 60).toFixed(2);
-            const airPressure = (Math.random() * 25 + 1000).toFixed(2);
+// Define a middleware to verify API key
+const verifyApiKey = (req, res, next) => {
+    const apiKey = req.headers['apikey'];
 
-            return {
-                temperature,
-                humidity,
-                airPressure,
-                district
-            };
-        });
-        await Weather.insertMany(weatherDetails);
-        console.log('Weather data saved successfully for all districts');
-    } catch (error) {
-        console.log('Internal server error :' + error)
+
+    if (apiKey && apiKey === backendApiKey) {
+        console.log("Authorized User")
+        next(); // Proceed to the next middleware
+    } else {
+        console.log("Unauthorized User")
+        res.status(401).json({ error: 'Unauthorized' });
     }
-    setTimeout(generateWeatherData, 0.1 * 60 * 1000);
 };
+
+// Middleware
+router.use(express.json());
+
+
+router.post('/save', verifyApiKey, async (req, res) => {
+    try {
+        const weatherDetails = req.body;
+        await Weather.insertMany(weatherDetails);
+        res.status(201).json({ message: 'Weather data saved successfully' });
+    } catch (error) {
+        console.error('Error saving weather data:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 async function deleteAllDataBy24Hours() {
     try {
@@ -38,10 +40,8 @@ async function deleteAllDataBy24Hours() {
     } catch (error) {
         console.error('Internal server error:', error);
     }
-    setTimeout(deleteAllDataBy24Hours, 1440 * 60 * 1000);
+    setTimeout(deleteAllDataBy24Hours, 24 * 60 * 60 * 1000);
 };
-generateWeatherData();
-deleteAllDataBy24Hours()
 
 router.get('/', async (req, res) => {
     try {
@@ -55,5 +55,18 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/all', async (req, res) => {
+    try {
+        const weather = await Weather.find().sort({ timestamp: -1 })
+        if (!weather || weather.length === 0) {
+            throw Error('No items');
+        }
+        res.status(200).json(weather);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+deleteAllDataBy24Hours()
 
 module.exports = router;
