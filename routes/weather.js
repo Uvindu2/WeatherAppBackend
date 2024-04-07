@@ -72,7 +72,7 @@ router.get('/', async (req, res) => {
  */
 router.get('/all', async (req, res) => {
     try {
-        const weather = await Weather.find().sort({ timestamp: -1 })
+        const weather = await Weather.find()
         if (!weather || weather.length === 0) {
             throw Error('No weather data found');
         }
@@ -81,6 +81,7 @@ router.get('/all', async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 });
+  
 
 /**
  * @swagger
@@ -133,16 +134,15 @@ router.post('/save', verifyApiKey, async (req, res) => {
  */
 
 // delete all data from database every 24 hours
-async function deleteAllDataBy24Hours() {
-    try {
-        await Weather.deleteMany({});
-        console.log('All weather data removed successfully');
-    } catch (error) {
-        console.error('Error deleting weather data:', error);
-    }
-    setTimeout(deleteAllDataBy24Hours, 24 * 60 * 60 * 1000);
-}
+// async function deleteAllDataBy24Hours() {
+//     try {
+//         await Weather.deleteMany({});
+//         console.log('All weather data removed successfully');
+//     } catch (error) {
+//         console.error('Error deleting weather data:', error);
+//     }
+//     setTimeout(deleteAllDataBy24Hours, 24 * 60 * 60 * 1000);
+// }
 
-deleteAllDataBy24Hours();
-
+///deleteAllDataBy24Hours();
 module.exports = router;
