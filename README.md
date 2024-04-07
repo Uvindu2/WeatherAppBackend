@@ -12,7 +12,7 @@ get weather latest details local api : http://localhost:4000/api/weather/
 get weather all details local api : http://localhost:4000/api/weather/all
 
 deployment =
-swager api : https://weathermapbe.onrender.com/api-docs/
+swagger api : https://weathermapbe.onrender.com/api-docs/
 fetch weather latest update details : https://weathermapbe.onrender.com/api/weather
 fetch weather all details : https://weathermapbe.onrender.com/api/weather/all
 
