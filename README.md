@@ -6,7 +6,7 @@ Coventry Index : 13865313
 
 github link = https://github.com/Uvindu2/WeatherAppBackend.git
 
-local run :
+local :
 swagger api = http://localhost:4000/api-docs/
 get weather latest details local api : http://localhost:4000/api/weather/
 get weather all details local api : http://localhost:4000/api/weather/all
