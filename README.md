@@ -8,7 +8,8 @@ github link = https://github.com/Uvindu2/WeatherAppBackend.git
 
 local run :
 swagger api = http://localhost:4000/api-docs/
-get weather details local api : http://localhost:4000/api/weather/
+get weather latest details local api : http://localhost:4000/api/weather/
+get weather all details local api : http://localhost:4000/api/weather/all
 
 depolyment =
 swager : https://weathermapbe.onrender.com/api-docs/
