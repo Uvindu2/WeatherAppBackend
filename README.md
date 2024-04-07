@@ -4,6 +4,13 @@ This is backend for Web APi cw
 NIBM index : COBSCCOMP4Y222P-065
 Coventry Index : 13865313
 
-swagger api = http://localhost:4000/api-docs/
-
 github link = https://github.com/Uvindu2/WeatherAppBackend.git
+
+local run :
+swagger api = http://localhost:4000/api-docs/
+http://localhost:4000/api/weather/
+
+depolyment =
+swager : https://weathermapbe.onrender.com/api-docs/
+etch weather details only : https://weathermapbe.onrender.com/api/weather
+
