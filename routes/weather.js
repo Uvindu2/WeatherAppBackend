@@ -133,7 +133,6 @@ router.post('/save', verifyApiKey, async (req, res) => {
  *           type: string
  */
 
-//delete all data from database every 24 hours
 async function deleteAllDataBy24Hours() {
     try {
         await Weather.deleteMany({});
