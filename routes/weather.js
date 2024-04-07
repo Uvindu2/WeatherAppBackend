@@ -133,16 +133,16 @@ router.post('/save', verifyApiKey, async (req, res) => {
  *           type: string
  */
 
-// delete all data from database every 24 hours
-// async function deleteAllDataBy24Hours() {
-//     try {
-//         await Weather.deleteMany({});
-//         console.log('All weather data removed successfully');
-//     } catch (error) {
-//         console.error('Error deleting weather data:', error);
-//     }
-//     setTimeout(deleteAllDataBy24Hours, 24 * 60 * 60 * 1000);
-// }
+//delete all data from database every 24 hours
+async function deleteAllDataBy24Hours() {
+    try {
+        await Weather.deleteMany({});
+        console.log('All weather data removed successfully');
+    } catch (error) {
+        console.error('Error deleting weather data:', error);
+    }
+    setTimeout(deleteAllDataBy24Hours, 24 * 60 * 60 * 1000);
+}
 
 ///deleteAllDataBy24Hours();
 module.exports = router;
