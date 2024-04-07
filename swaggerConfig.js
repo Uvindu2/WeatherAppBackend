@@ -10,7 +10,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:4000', // Update with your server URL
+        url: 'https://weathermapbe.onrender.com', // Update with your server URL
         description: 'Development server',
       },
     ],
