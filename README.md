@@ -12,5 +12,6 @@ get weather details local api : http://localhost:4000/api/weather/
 
 depolyment =
 swager : https://weathermapbe.onrender.com/api-docs/
-fetch weather details : https://weathermapbe.onrender.com/api/weather
+fetch weather latest update details : https://weathermapbe.onrender.com/api/weather
+fetch weather all details : https://weathermapbe.onrender.com/api/weather/all
 
